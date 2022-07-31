@@ -1,21 +1,21 @@
 package com.github.api.parkingcontrol.backend.apartamento.adapter.out.persistence;
 
-import com.github.api.parkingcontrol.backend.apartamento.application.port.out.BuscarApartamentoPorIdPort;
-import com.github.api.parkingcontrol.backend.apartamento.application.port.out.CadastrarApartamentoPort;
-import com.github.api.parkingcontrol.backend.apartamento.application.port.out.RemoverApartamentoPort;
-import com.github.api.parkingcontrol.backend.apartamento.application.port.out.VerificarSeExisteMoradorNoApartamentoPort;
+import com.github.api.parkingcontrol.backend.apartamento.application.port.out.*;
 import com.github.api.parkingcontrol.backend.apartamento.domain.Apartamento;
 import com.github.api.parkingcontrol.backend.apartamento.domain.entities.ApartamentoEntity;
 import com.github.api.parkingcontrol.backend.apartamento.domain.mappers.ApartamentoMapper;
 import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ApartamentoPersistenceAdapter implements
         BuscarApartamentoPorIdPort,
+        BuscarApartamentosPorIdsPort,
         CadastrarApartamentoPort,
         RemoverApartamentoPort,
         VerificarSeExisteMoradorNoApartamentoPort {
@@ -31,6 +31,15 @@ public class ApartamentoPersistenceAdapter implements
                 .map(apartamentoMapper::fromEntity)
                 .findFirst()
                 .orElseThrow(() -> new BusinessRuleException("Nenhum apartamento com o ID " + id + " foi encontrado!"));
+    }
+
+    @Override
+    public List<Apartamento> buscarApartamentosPorId(List<String> idsApartamentos) {
+
+        return apartamentoRepository.findAllById(idsApartamentos)
+                .stream()
+                .map(apartamentoMapper::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
