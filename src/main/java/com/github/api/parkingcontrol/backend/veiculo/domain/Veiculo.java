@@ -22,4 +22,22 @@ public class Veiculo {
     private String modeloDoVeiculo;
 
     private String corDoVeiculo;
+
+    public void atualizar(String placaDoVeiculo,
+                          String marcaDoVeiculo,
+                          String modeloDoVeiculo,
+                          String corDoVeiculo) {
+
+        this.placaDoVeiculo = placaDoVeiculo;
+        this.marcaDoVeiculo = marcaDoVeiculo;
+        this.modeloDoVeiculo = modeloDoVeiculo;
+        this.corDoVeiculo = corDoVeiculo;
+    }
+
+    public Veiculo(String placaDoVeiculo, String marcaDoVeiculo, String modeloDoVeiculo, String corDoVeiculo) {
+        this.placaDoVeiculo = placaDoVeiculo;
+        this.marcaDoVeiculo = marcaDoVeiculo;
+        this.modeloDoVeiculo = modeloDoVeiculo;
+        this.corDoVeiculo = corDoVeiculo;
+    }
 }
