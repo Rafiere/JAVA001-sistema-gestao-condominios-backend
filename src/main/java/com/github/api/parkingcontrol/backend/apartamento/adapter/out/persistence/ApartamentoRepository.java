@@ -11,7 +11,7 @@ public interface ApartamentoRepository extends JpaRepository<ApartamentoEntity, 
 
     @Query("SELECT COUNT(m) " +
             "FROM MoradorEntity m " +
-            "LEFT JOIN m.apartamentoEntities ap " +
+            "LEFT JOIN m.apartamentos ap " +
             "WHERE ap.id =: idApartamento ")
     boolean verificarSeExisteMoradorNoApartamento(String idApartamento);
 }
