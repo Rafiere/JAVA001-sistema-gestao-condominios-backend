@@ -12,7 +12,7 @@
 	<artifactId>back-end</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>back-end</name>
-	<description>Projeto de uma API para controle de vagas de estacionamento.</description>
+	<description>Projeto de um sistema para gestão de condomínios.</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
