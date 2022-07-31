@@ -1,11 +1,7 @@
 package com.github.api.parkingcontrol.backend.morador.domain.entities;
 
-import com.github.api.parkingcontrol.backend.apartamento.domain.Apartamento;
 import com.github.api.parkingcontrol.backend.apartamento.domain.entities.ApartamentoEntity;
-import com.github.api.parkingcontrol.backend.estacionamento.domain.VagaEstacionamento;
 import com.github.api.parkingcontrol.backend.estacionamento.domain.entities.VagaEstacionamentoEntity;
-import com.github.api.parkingcontrol.backend.morador.domain.Morador;
-import com.github.api.parkingcontrol.backend.veiculo.domain.Veiculo;
 import com.github.api.parkingcontrol.backend.veiculo.domain.entities.VeiculoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +27,7 @@ public class MoradorEntity {
     private String cpf;
 
     @OneToMany
-    private List<ApartamentoEntity> apartamento;
+    private List<ApartamentoEntity> apartamentos;
 
     @OneToMany
     private List<VeiculoEntity> veiculos;
