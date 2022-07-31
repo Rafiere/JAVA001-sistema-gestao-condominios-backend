@@ -16,9 +16,12 @@ import java.util.stream.Collectors;
 public class MoradorPersistenceAdapter implements
         CadastrarMoradorPort,
         CadastrarVariosMoradoresPort,
-        ExcluirMoradorPort,
+        RemoverMoradorPort,
         BuscarMoradorPorIdPort,
-        BuscarMoradorPeloNomeCompletoPort {
+        BuscarMoradorPeloNomeCompletoPort,
+        VerificarSeMoradorPossuiAlgumApartamentoPort,
+        VerificarSeMoradorPossuiAlgumVeiculoPort,
+        VerificarSeMoradorPossuiAlgumaVagaEstacionamentoPort {
 
     private final MoradorRepository moradorRepository;
     private final MoradorMapper moradorMapper;
@@ -68,8 +71,26 @@ public class MoradorPersistenceAdapter implements
     }
 
     @Override
-    public void excluirMorador(String idMorador) {
+    public void removerMorador(String idMorador) {
 
         moradorRepository.deleteById(idMorador);
+    }
+
+    @Override
+    public boolean verificarSeMoradorPossuiAlgumApartamento(String idMorador) {
+
+        return moradorRepository.moradorPossuiAlgumApartamento(idMorador);
+    }
+
+    @Override
+    public boolean verificarSeMoradorPossuiAlgumVeiculo(String idMorador) {
+
+        return moradorRepository.moradorPossuiAlgumVeiculo(idMorador);
+    }
+
+    @Override
+    public boolean verificarSeMoradorPossuiAlgumaVagaEstacionamento(String idMorador) {
+
+        return moradorRepository.moradorPossuiAlgumaVagaEstacionamento(idMorador);
     }
 }
