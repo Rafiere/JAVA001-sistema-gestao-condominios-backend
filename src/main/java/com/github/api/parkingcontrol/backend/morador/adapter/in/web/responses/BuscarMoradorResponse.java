@@ -34,7 +34,7 @@ public class BuscarMoradorResponse {
                         morador.getNome(),
                         morador.getSobrenome(),
                         morador.getCpf(),
-                        morador.getApartamento(),
+                        morador.getApartamentos(),
                         morador.getVeiculos(),
                         morador.getVagasEstacionamento()))
                 .collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class BuscarMoradorResponse {
                 morador.getNome(),
                 morador.getSobrenome(),
                 morador.getCpf(),
-                morador.getApartamento(),
+                morador.getApartamentos(),
                 morador.getVeiculos(),
                 morador.getVagasEstacionamento());
     }
