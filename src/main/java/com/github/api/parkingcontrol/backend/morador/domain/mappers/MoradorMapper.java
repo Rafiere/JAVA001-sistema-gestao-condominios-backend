@@ -24,7 +24,7 @@ public class MoradorMapper {
                 moradorEntity.getNome(),
                 moradorEntity.getSobrenome(),
                 moradorEntity.getCpf(),
-                moradorEntity.getApartamento().stream().map(apartamentoMapper::fromEntity).collect(Collectors.toList()),
+                moradorEntity.getApartamentos().stream().map(apartamentoMapper::fromEntity).collect(Collectors.toList()),
                 moradorEntity.getVeiculos().stream().map(veiculoMapper::fromEntity).collect(Collectors.toList()),
                 moradorEntity.getVagasEstacionamento().stream().map(vagaEstacionamentoMapper::fromEntity).collect(Collectors.toList()));
     }
@@ -35,7 +35,7 @@ public class MoradorMapper {
                 morador.getNome(),
                 morador.getSobrenome(),
                 morador.getCpf(),
-                morador.getApartamento().stream().map(apartamentoMapper::fromDomain).collect(Collectors.toList()),
+                morador.getApartamentos().stream().map(apartamentoMapper::fromDomain).collect(Collectors.toList()),
                 morador.getVeiculos().stream().map(veiculoMapper::fromDomain).collect(Collectors.toList()),
                 morador.getVagasEstacionamento().stream().map(vagaEstacionamentoMapper::fromDomain).collect(Collectors.toList())
         );
