@@ -13,9 +13,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class VagaEstacionamento {
 
-    private String id; //É recomendada a utilização de UUIDs em arquiteturas distribuídas para evitar o conflito de dados.
+    private String id;
 
     private String linhaEstacionamento;
 
     private String colunaEstacionamento;
+
+    public VagaEstacionamento(String linhaEstacionamento, String colunaEstacionamento) {
+        this.linhaEstacionamento = linhaEstacionamento;
+        this.colunaEstacionamento = colunaEstacionamento;
+    }
+
+    public void atualizar(String linhaEstacionamento, String colunaEstacionamento) {
+
+        this.linhaEstacionamento = linhaEstacionamento;
+        this.colunaEstacionamento = colunaEstacionamento;
+    }
 }
