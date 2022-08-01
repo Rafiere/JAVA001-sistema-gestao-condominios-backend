@@ -15,7 +15,7 @@ public class BuscarVagaEstacionamentoPorIdController {
 
     private final BuscarVagaEstacionamentoPorIdPort buscarVagaEstacionamentoPorIdPort;
 
-    @GetMapping("/buscar-vaga-estacionamento-por-id/")
+    @GetMapping("/buscar-vaga-estacionamento-por-id")
     public ResponseEntity<BuscarVagaEstacionamentoPorIdResponse> execute(@RequestParam String idVagaEstacionamento){
 
         BuscarVagaPorIdCommand command = new BuscarVagaPorIdCommand(idVagaEstacionamento);
