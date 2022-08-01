@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * Esse é o modo antigo de realizar a configuração do Spring Security.
  */
 
-@Configuration
-@EnableWebSecurity //Essa anotação serve para desligarmos todas as configurações de segurança padrão do Spring Security, assim, toda a configuração deverá ser feita do início.
+//@Configuration
+//@EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    @Bean
+//    @Bean
     public PasswordEncoder passwordEncoder(){
 
         return new BCryptPasswordEncoder();
