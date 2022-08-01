@@ -5,8 +5,11 @@ import com.github.api.parkingcontrol.backend.estacionamento.application.port.out
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RemoverVagaEstacionamentoUseCase {
 
     private final RemoverVagaEstacionamentoPort removerVagaEstacionamentoPort;

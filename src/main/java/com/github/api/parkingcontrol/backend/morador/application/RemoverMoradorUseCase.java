@@ -9,8 +9,11 @@ import com.github.api.parkingcontrol.backend.morador.application.port.out.Verifi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RemoverMoradorUseCase {
 
     private final RemoverMoradorPort removerMoradorPort;

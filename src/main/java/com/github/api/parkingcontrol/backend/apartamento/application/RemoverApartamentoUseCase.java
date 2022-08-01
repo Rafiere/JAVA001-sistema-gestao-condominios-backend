@@ -8,8 +8,11 @@ import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleExcep
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RemoverApartamentoUseCase {
 
     private final RemoverApartamentoPort removerApartamentoPort;

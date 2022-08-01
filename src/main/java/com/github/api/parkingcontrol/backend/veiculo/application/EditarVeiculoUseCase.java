@@ -7,8 +7,11 @@ import com.github.api.parkingcontrol.backend.veiculo.domain.Veiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EditarVeiculoUseCase {
 
     private final CadastrarVeiculoPort cadastrarVeiculoPort;

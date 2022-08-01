@@ -5,8 +5,11 @@ import com.github.api.parkingcontrol.backend.veiculo.application.port.out.Remove
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RemoverVeiculoUseCase {
 
     private final RemoverVeiculoPort removerVeiculoPort;

@@ -13,10 +13,12 @@ import com.github.api.parkingcontrol.backend.veiculo.domain.Veiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EditarMoradorUseCase {
 
     private final CadastrarMoradorPort cadastrarMoradorPort;
