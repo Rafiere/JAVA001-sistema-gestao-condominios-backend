@@ -7,6 +7,8 @@
 <ul>
     <li>Java</li>
     <li>Spring</li>
+    <li>Maven</li>
+    <li>Swagger</li>
     <li>PostgreSQL</li>
     <li>Heroku</li>
     <li>GitHub Actions</li>
