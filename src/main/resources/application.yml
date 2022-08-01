@@ -6,7 +6,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop #Sempre que mapearmos uma coluna ou entidade, quando executarmos a aplicação, essas alterações serão refletidas na base de dados.
+      ddl-auto: update #Sempre que mapearmos uma coluna ou entidade, quando executarmos a aplicação, essas alterações serão refletidas na base de dados.
 
     properties:
       hibernate.jdbc.lob.non_contextual_creation: true #Geralmente, o Hibernate procura metadados ao iniciar a aplicação, assim, estamos utilizando essa configuração para evitar a exibição de logs de erros.
