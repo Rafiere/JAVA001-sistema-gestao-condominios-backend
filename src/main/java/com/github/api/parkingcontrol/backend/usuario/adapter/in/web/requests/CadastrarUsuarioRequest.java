@@ -1,11 +1,11 @@
 package com.github.api.parkingcontrol.backend.usuario.adapter.in.web.requests;
 
-import com.github.api.parkingcontrol.backend.usuario.domain.Cargo;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Value
@@ -23,6 +23,6 @@ public class CadastrarUsuarioRequest {
     @NotBlank
     String password;
 
-    @NotBlank
-    List<Cargo> cargos;
+    @NotEmpty
+    List<String> idsCargosDoUsuario;
 }
