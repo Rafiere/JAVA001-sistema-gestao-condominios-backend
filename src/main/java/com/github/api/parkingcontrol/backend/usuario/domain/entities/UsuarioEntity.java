@@ -25,8 +25,6 @@ public class UsuarioEntity {
 
     private boolean isAtivo;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "usuario_id"),
-               inverseJoinColumns = @JoinColumn(name = "cargo_id"))
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<CargoEntity> cargos;
 }
