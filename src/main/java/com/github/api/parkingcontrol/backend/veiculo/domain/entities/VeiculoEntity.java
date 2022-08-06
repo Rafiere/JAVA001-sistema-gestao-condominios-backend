@@ -19,7 +19,7 @@ import java.util.UUID;
 public class VeiculoEntity {
 
     @Id
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     private String placaDoVeiculo;
 
