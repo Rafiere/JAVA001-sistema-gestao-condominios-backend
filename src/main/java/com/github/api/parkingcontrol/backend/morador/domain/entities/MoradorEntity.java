@@ -18,7 +18,7 @@ import java.util.UUID;
 public class MoradorEntity {
 
     @Id
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     private String nome;
 
