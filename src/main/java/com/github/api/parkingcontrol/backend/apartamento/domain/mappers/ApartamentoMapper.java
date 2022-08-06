@@ -4,6 +4,8 @@ import com.github.api.parkingcontrol.backend.apartamento.domain.Apartamento;
 import com.github.api.parkingcontrol.backend.apartamento.domain.entities.ApartamentoEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class ApartamentoMapper {
 
@@ -18,6 +20,15 @@ public class ApartamentoMapper {
     public ApartamentoEntity fromDomain(Apartamento apartamento){
 
         return new ApartamentoEntity(
+                UUID.randomUUID().toString(),
+                apartamento.getBlocoDoApartamento(),
+                apartamento.getNumeroDoApartamento());
+    }
+
+    public ApartamentoEntity fromDomainComIdPredefinido(Apartamento apartamento){
+
+        return new ApartamentoEntity(
+                apartamento.getId(),
                 apartamento.getBlocoDoApartamento(),
                 apartamento.getNumeroDoApartamento());
     }
