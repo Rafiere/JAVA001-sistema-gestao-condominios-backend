@@ -2,6 +2,7 @@ package com.github.api.parkingcontrol.backend.usuario.application;
 
 import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleException;
 import com.github.api.parkingcontrol.backend.token.application.components.CriarEEnviarEmailConfirmacaoCadastroComponent;
+import com.github.api.parkingcontrol.backend.token.application.events.EnviarEmailDeConfirmacaoCadastroEvent;
 import com.github.api.parkingcontrol.backend.token.application.helpers.GerarTokenEmailHelper;
 import com.github.api.parkingcontrol.backend.token.application.port.out.SalvarTokenEmailPort;
 import com.github.api.parkingcontrol.backend.token.domain.TokenEmail;
@@ -13,6 +14,7 @@ import com.github.api.parkingcontrol.backend.usuario.application.port.out.Verifi
 import com.github.api.parkingcontrol.backend.usuario.domain.Cargo;
 import com.github.api.parkingcontrol.backend.usuario.domain.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,9 @@ public class CadastrarUsuarioUseCase {
     private final BuscarCargosPorIdsPort buscarCargosPorIdsPort;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
+
 
 
     private final CriarEEnviarEmailConfirmacaoCadastroComponent criarEEnviarEmailConfirmacaoCadastroComponent;
@@ -62,6 +67,7 @@ public class CadastrarUsuarioUseCase {
 
         Usuario usuarioCadastrado = cadastrarUsuarioPort.cadastrarUsuario(usuario);
 
+        //Até aqui, está certo.
         TokenEmail token = gerarESalvarToken(usuarioCadastrado);
 
         enviarEmailDeConfirmacaoDeCadastro(token);
@@ -73,7 +79,7 @@ public class CadastrarUsuarioUseCase {
 
         TokenEmail tokenEmail = gerarTokenEmailHelper.gerarToken();
 
-        tokenEmail.definirUsuario(usuario); //Até aqui, o usuário é definido corretamente.
+        tokenEmail.definirUsuario(usuario);
 
         return salvarTokenEmailPort.salvarTokenEmail(tokenEmail);
     }
@@ -90,6 +96,6 @@ public class CadastrarUsuarioUseCase {
 
     private void enviarEmailDeConfirmacaoDeCadastro(TokenEmail tokenEmail){
 
-        criarEEnviarEmailConfirmacaoCadastroComponent.execute(tokenEmail);
+        applicationEventPublisher.publishEvent(new EnviarEmailDeConfirmacaoCadastroEvent(tokenEmail));
     }
 }
