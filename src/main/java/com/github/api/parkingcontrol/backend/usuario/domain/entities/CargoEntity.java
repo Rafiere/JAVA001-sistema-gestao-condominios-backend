@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -18,8 +15,11 @@ import java.util.UUID;
 public class CargoEntity {
 
     @Id
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private TipoDeCargo tipoDeCargo;
+
+    @ManyToMany(mappedBy = "cargos")
+    private List<UsuarioEntity> usuarios;
 }
