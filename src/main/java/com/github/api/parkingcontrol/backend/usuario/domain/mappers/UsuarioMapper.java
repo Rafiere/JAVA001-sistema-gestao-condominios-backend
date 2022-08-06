@@ -5,6 +5,7 @@ import com.github.api.parkingcontrol.backend.usuario.domain.entities.UsuarioEnti
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,10 +28,22 @@ public class UsuarioMapper {
     public UsuarioEntity fromDomain(Usuario usuario) {
 
         return new UsuarioEntity(
+                UUID.randomUUID().toString(),
                 usuario.getEmail(),
                 usuario.getUsername(),
                 usuario.getPassword(),
                 usuario.isAtivo(),
                 usuario.getCargos().stream().map(cargoMapper::fromDomain).collect(Collectors.toList()));
+    }
+
+    public UsuarioEntity fromDomainComIdPredefinido(Usuario usuario){
+
+        return new UsuarioEntity(
+                usuario.getId(),
+                usuario.getEmail(),
+                usuario.getUsername(),
+                usuario.getPassword(),
+                usuario.isAtivo(),
+                usuario.getCargos().stream().map(cargoMapper::fromDomainComIdPredefinido).collect(Collectors.toList()));
     }
 }
