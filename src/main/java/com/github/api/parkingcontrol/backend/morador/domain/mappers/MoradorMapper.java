@@ -8,6 +8,7 @@ import com.github.api.parkingcontrol.backend.veiculo.domain.mappers.VeiculoMappe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,6 +33,7 @@ public class MoradorMapper {
     public MoradorEntity fromDomain(Morador morador){
 
         return new MoradorEntity(
+                UUID.randomUUID().toString(),
                 morador.getNome(),
                 morador.getSobrenome(),
                 morador.getCpf(),
@@ -41,6 +43,16 @@ public class MoradorMapper {
         );
     }
 
+    public MoradorEntity fromDomainComIdPredefinido(Morador morador){
 
-
+        return new MoradorEntity(
+                morador.getId(),
+                morador.getNome(),
+                morador.getSobrenome(),
+                morador.getCpf(),
+                morador.getApartamentos().stream().map(apartamentoMapper::fromDomainComIdPredefinido).collect(Collectors.toList()),
+                morador.getVeiculos().stream().map(veiculoMapper::fromDomainComIdPredefinido).collect(Collectors.toList()),
+                morador.getVagasEstacionamento().stream().map(vagaEstacionamentoMapper::fromDomainComIdPredefinido).collect(Collectors.toList())
+        );
+    }
 }
