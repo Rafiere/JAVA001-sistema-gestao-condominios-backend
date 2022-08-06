@@ -18,7 +18,7 @@ import java.util.UUID;
 public class VagaEstacionamentoEntity {
 
     @Id
-    private final String id = UUID.randomUUID().toString(); //Ao utilizarmos o "final", estamos excluindo esse campo do construtor.
+    private String id;
 
     private String linhaEstacionamento;
 
