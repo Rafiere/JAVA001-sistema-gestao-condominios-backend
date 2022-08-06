@@ -6,14 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cargo implements GrantedAuthority {
 
     private String id;
-
     private TipoDeCargo cargo;
+
+    private List<Usuario> usuarios;
 
     @Override
     public String getAuthority() {
