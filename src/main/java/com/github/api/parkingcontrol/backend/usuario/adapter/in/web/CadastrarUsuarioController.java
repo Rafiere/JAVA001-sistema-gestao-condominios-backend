@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/v1/usuario")
 @RequiredArgsConstructor
 public class CadastrarUsuarioController {
 
@@ -25,8 +25,8 @@ public class CadastrarUsuarioController {
                 request.getEmail(),
                 request.getUsername(),
                 request.getPassword(),
-                true,
-                request.getCargos());
+                false,
+                request.getIdsCargosDoUsuario());
 
         Usuario usuarioCadastrado = cadastrarUsuarioUseCase.execute(command);
 
