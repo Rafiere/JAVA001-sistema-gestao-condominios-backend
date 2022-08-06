@@ -15,7 +15,7 @@ import java.util.UUID;
 public class UsuarioEntity {
 
     @Id
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     private String email;
 
@@ -25,6 +25,8 @@ public class UsuarioEntity {
 
     private boolean isAtivo;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(joinColumns = @JoinColumn(name = "usuario_id"),
+               inverseJoinColumns = @JoinColumn(name = "cargo_id"))
     private List<CargoEntity> cargos;
 }
