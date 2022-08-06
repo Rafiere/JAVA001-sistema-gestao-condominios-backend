@@ -1,8 +1,8 @@
 package com.github.api.parkingcontrol.backend.usuario.application;
 
 import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleException;
-import com.github.api.parkingcontrol.backend.token.application.EnviarEmailConfirmacaoCadastroUseCase;
-import com.github.api.parkingcontrol.backend.token.application.GerarTokenEmailHelper;
+import com.github.api.parkingcontrol.backend.token.application.components.CriarEEnviarEmailConfirmacaoCadastroComponent;
+import com.github.api.parkingcontrol.backend.token.application.helpers.GerarTokenEmailHelper;
 import com.github.api.parkingcontrol.backend.token.application.port.out.SalvarTokenEmailPort;
 import com.github.api.parkingcontrol.backend.token.domain.TokenEmail;
 import com.github.api.parkingcontrol.backend.usuario.adapter.in.web.command.CadastrarUsuarioCommand;
@@ -13,6 +13,7 @@ import com.github.api.parkingcontrol.backend.usuario.application.port.out.Verifi
 import com.github.api.parkingcontrol.backend.usuario.domain.Cargo;
 import com.github.api.parkingcontrol.backend.usuario.domain.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,18 +27,20 @@ public class CadastrarUsuarioUseCase {
     private final CadastrarUsuarioPort cadastrarUsuarioPort;
     private final VerificarSeEmailJaFoiCadastradoPort verificarSeEmailJaFoiCadastradoPort;
     private final VerificarSeUsernameJaFoiCadastradoPort verificarSeUsernameJaFoiCadastradoPort;
-    private final SalvarTokenEmailPort salvarTokenEmailPort;
     private final GerarTokenEmailHelper gerarTokenEmailHelper;
+    private final SalvarTokenEmailPort salvarTokenEmailPort;
     private final BuscarCargosPorIdsPort buscarCargosPorIdsPort;
 
+    private final PasswordEncoder passwordEncoder;
 
-    private final EnviarEmailConfirmacaoCadastroUseCase enviarEmailConfirmacaoCadastroUseCase;
+
+    private final CriarEEnviarEmailConfirmacaoCadastroComponent criarEEnviarEmailConfirmacaoCadastroComponent;
 
     public Usuario execute(CadastrarUsuarioCommand command) {
 
         if(emailJaFoiCadastrado(command.getEmail())){
 
-            throw new BusinessRuleException("Esse email já está em uso. Por favor, envie um outro email.");
+            throw new BusinessRuleException("Esse email já está em uso. Por favor, utilize um outro email.");
         }
 
         if(usernameJaFoiCadastrado(command.getUsername())){
@@ -48,18 +51,31 @@ public class CadastrarUsuarioUseCase {
         List<Cargo> cargosBuscados =
                 buscarCargosPorIdsPort.buscarCargosPorIds(command.getIdsCargosDoUsuario());
 
+        String senhaComEncriptacao = passwordEncoder.encode(command.getPassword());
+
         Usuario usuario = new Usuario(
                 command.getEmail(),
-                command.getPassword(),
                 command.getUsername(),
+                senhaComEncriptacao,
                 command.isAtivo(),
                 cargosBuscados);
 
-        Usuario usuarioCriado = cadastrarUsuarioPort.cadastrarUsuario(usuario);
+        Usuario usuarioCadastrado = cadastrarUsuarioPort.cadastrarUsuario(usuario);
 
-        enviarEmailDeConfirmacaoDeCadastro(usuarioCriado);
+        TokenEmail token = gerarESalvarToken(usuarioCadastrado);
 
-        return usuarioCriado;
+        enviarEmailDeConfirmacaoDeCadastro(token);
+
+        return usuarioCadastrado;
+    }
+
+    private TokenEmail gerarESalvarToken(Usuario usuario) {
+
+        TokenEmail tokenEmail = gerarTokenEmailHelper.gerarToken();
+
+        tokenEmail.definirUsuario(usuario); //Até aqui, o usuário é definido corretamente.
+
+        return salvarTokenEmailPort.salvarTokenEmail(tokenEmail);
     }
 
     private boolean usernameJaFoiCadastrado(String username) {
@@ -72,14 +88,8 @@ public class CadastrarUsuarioUseCase {
         return verificarSeEmailJaFoiCadastradoPort.verificarSeEmailJaFoiCadastrado(email);
     }
 
-    private void enviarEmailDeConfirmacaoDeCadastro(Usuario usuario){
+    private void enviarEmailDeConfirmacaoDeCadastro(TokenEmail tokenEmail){
 
-        TokenEmail tokenEmail = gerarTokenEmailHelper.gerarToken();
-
-        tokenEmail.definirUsuario(usuario);
-
-        TokenEmail tokenEmailSalvo = salvarTokenEmailPort.salvarTokenEmail(tokenEmail);
-
-        enviarEmailConfirmacaoCadastroUseCase.execute(tokenEmailSalvo);
+        criarEEnviarEmailConfirmacaoCadastroComponent.execute(tokenEmail);
     }
 }
