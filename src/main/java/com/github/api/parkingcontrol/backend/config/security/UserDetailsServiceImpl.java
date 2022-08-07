@@ -2,6 +2,7 @@ package com.github.api.parkingcontrol.backend.config.security;
 
 import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleException;
 import com.github.api.parkingcontrol.backend.usuario.application.port.out.BuscarUsuarioPeloUsernamePort;
+import com.github.api.parkingcontrol.backend.usuario.domain.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +13,7 @@ import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional //Essa anotação foi utilizada para não tomar um NPE.
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final BuscarUsuarioPeloUsernamePort buscarUsuarioPeloUsernamePort;
@@ -20,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserDetails usuarioBuscado = buscarUsuarioPeloUsernamePort.buscarUsuarioPeloUsername(username);
+        Usuario usuarioBuscado = buscarUsuarioPeloUsernamePort.buscarUsuarioPeloUsername(username);
 
         if(!usuarioBuscado.isEnabled()){
 
