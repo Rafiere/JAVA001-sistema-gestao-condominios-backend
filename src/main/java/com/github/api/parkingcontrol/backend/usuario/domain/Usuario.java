@@ -31,11 +31,17 @@ public class Usuario implements UserDetails {
                    String password,
                    boolean isAtivo,
                    List<Cargo> cargos) {
+
         this.email = email;
         this.username = username;
         this.password = password;
         this.isAtivo = isAtivo;
         this.cargos = cargos;
+    }
+
+    public void ativarContaDoUsuario(){
+
+        this.isAtivo = true;
     }
 
     @Override
@@ -46,17 +52,17 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
