@@ -46,4 +46,15 @@ public class UsuarioMapper {
                 usuario.isAtivo(),
                 usuario.getCargos().stream().map(cargoMapper::fromDomainComIdPredefinido).collect(Collectors.toList()));
     }
+
+    public UsuarioEntity fromDomainComIdCargosPredefinidos(Usuario usuario){
+
+        return new UsuarioEntity(
+                UUID.randomUUID().toString(),
+                usuario.getEmail(),
+                usuario.getUsername(),
+                usuario.getPassword(),
+                usuario.isAtivo(),
+                usuario.getCargos().stream().map(cargoMapper::fromDomainComIdPredefinido).collect(Collectors.toList()));
+    }
 }
