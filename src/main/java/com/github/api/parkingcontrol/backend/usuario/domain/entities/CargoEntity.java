@@ -20,6 +20,6 @@ public class CargoEntity {
     @Enumerated(EnumType.STRING)
     private TipoDeCargo tipoDeCargo;
 
-    @ManyToMany(mappedBy = "cargos")
-    private List<UsuarioEntity> usuarios;
+    @ElementCollection
+    private List<String> idsUsuariosComOCargo;
 }
