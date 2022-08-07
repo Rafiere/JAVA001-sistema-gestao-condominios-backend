@@ -16,5 +16,5 @@ public class CadastrarUsuarioCommand {
 
     boolean isAtivo;
 
-    List<Cargo> cargos;
+    List<String> idsCargosDoUsuario;
 }
