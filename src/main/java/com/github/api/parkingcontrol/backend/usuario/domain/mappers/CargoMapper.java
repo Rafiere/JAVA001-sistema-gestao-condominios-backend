@@ -11,18 +11,12 @@ import java.util.stream.Collectors;
 @Component
 public class CargoMapper {
 
-    private final UsuarioMapper usuarioMapper;
-
-    public CargoMapper(@Lazy UsuarioMapper usuarioMapper) { //Inserção do "@Lazy" para retirar a dependência circular entre os mappers.
-        this.usuarioMapper = usuarioMapper;
-    }
-
     public Cargo fromEntity(CargoEntity cargoEntity){
 
         return new Cargo(
                 cargoEntity.getId(),
                 cargoEntity.getTipoDeCargo(),
-                cargoEntity.getUsuarios().stream().map(usuarioMapper::fromEntity).collect(Collectors.toList()));
+                cargoEntity.getIdsUsuariosComOCargo());
     }
 
     public CargoEntity fromDomain(Cargo cargo){
@@ -30,7 +24,7 @@ public class CargoMapper {
         return new CargoEntity(
                 UUID.randomUUID().toString(),
                 cargo.getCargo(),
-                cargo.getUsuarios().stream().map(usuarioMapper::fromDomain).collect(Collectors.toList()));
+                cargo.getIdsUsuariosComEsseCargo());
     }
 
     public CargoEntity fromDomainComIdPredefinido(Cargo cargo){
@@ -38,6 +32,6 @@ public class CargoMapper {
         return new CargoEntity(
                 cargo.getId(),
                 cargo.getCargo(),
-                cargo.getUsuarios().stream().map(usuarioMapper::fromDomainComIdPredefinido).collect(Collectors.toList()));
+                cargo.getIdsUsuariosComEsseCargo());
     }
 }
