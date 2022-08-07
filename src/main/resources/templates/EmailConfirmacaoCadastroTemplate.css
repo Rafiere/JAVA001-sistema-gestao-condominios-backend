@@ -1,0 +1,31 @@
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    mso-line-height-rule: exactly;
+    background-color: #f1f1f1;
+}
+
+.email-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.table-container {
+    border: 0;
+    width: 100%;
+}
+
+.logo {
+    text-align: center;
+}
+
+.table-td-externo {
+    padding: 2em 0em 4em 0em;
+}
+
+.text {
+    padding: 0 2.5em;
+    text-align: center;
+}
