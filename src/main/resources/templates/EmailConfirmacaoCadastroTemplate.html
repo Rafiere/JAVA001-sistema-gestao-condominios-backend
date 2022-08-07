@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <title></title>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <link href="./EmailConfirmacaoCadastroTemplate.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="email-container">
+    <table>
+        <tr>
+            <td>
+                <table role="presentation" class="table-container">
+                    <tr>
+                        <td class="logo">
+                            <h1>Seja bem-vindo!</h1>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-td-externo">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="text">
+                                <h2>Finalize a criação da sua conta no Condogestão!</h2>
+                                <h3>Olá,
+                                    <p th:text="${nomeDoCliente}">
+                                </h3>
+                                <h3>Nós estamos animados de ter você como um de nossos clientes.
+                                    Você apenas precisa clicar no botão abaixo para confirmar a sua conta!
+                                </h3>
+                                <form method="POST" th:action="'http://localhost:8080/email' + ${endpointDeConfirmacao + tokenDeVerificacao}">
+                                    <button type="submit">Valide sua conta!</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
