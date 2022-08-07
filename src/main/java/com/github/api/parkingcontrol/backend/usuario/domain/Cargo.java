@@ -15,8 +15,7 @@ public class Cargo implements GrantedAuthority {
 
     private String id;
     private TipoDeCargo cargo;
-
-    private List<Usuario> usuarios;
+    private List<String> idsUsuariosComEsseCargo;
 
     @Override
     public String getAuthority() {
