@@ -1,10 +1,7 @@
 package com.github.api.parkingcontrol.backend.usuario.adapter.out.persistence;
 
 import com.github.api.parkingcontrol.backend.config.exceptions.BusinessRuleException;
-import com.github.api.parkingcontrol.backend.usuario.application.port.out.BuscarUsuarioPeloUsernamePort;
-import com.github.api.parkingcontrol.backend.usuario.application.port.out.CadastrarUsuarioPort;
-import com.github.api.parkingcontrol.backend.usuario.application.port.out.VerificarSeEmailJaFoiCadastradoPort;
-import com.github.api.parkingcontrol.backend.usuario.application.port.out.VerificarSeUsernameJaFoiCadastradoPort;
+import com.github.api.parkingcontrol.backend.usuario.application.port.out.*;
 import com.github.api.parkingcontrol.backend.usuario.domain.Usuario;
 import com.github.api.parkingcontrol.backend.usuario.domain.entities.UsuarioEntity;
 import com.github.api.parkingcontrol.backend.usuario.domain.mappers.UsuarioMapper;
@@ -17,7 +14,8 @@ public class UsuarioPersistenceAdapter implements
         CadastrarUsuarioPort,
         VerificarSeEmailJaFoiCadastradoPort,
         VerificarSeUsernameJaFoiCadastradoPort,
-        BuscarUsuarioPeloUsernamePort {
+        BuscarUsuarioPeloUsernamePort,
+        AtualizarUsuarioPort{
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
@@ -25,9 +23,10 @@ public class UsuarioPersistenceAdapter implements
     @Override
     public Usuario cadastrarUsuario(Usuario usuario) {
 
-        UsuarioEntity usuarioEntity = usuarioMapper.fromDomain(usuario);
+        UsuarioEntity usuarioEntity = usuarioMapper.fromDomainComIdCargosPredefinidos(usuario);
 
-        UsuarioEntity usuarioSalvo = usuarioRepository.save(usuarioEntity);
+        UsuarioEntity usuarioSalvo = usuarioRepository.saveAndFlush(usuarioEntity);
+        usuarioSalvo.getCargos().forEach(cargo -> cargo.getIdsUsuariosComOCargo().add(usuarioSalvo.getId()));
 
         return usuarioMapper.fromEntity(usuarioSalvo);
     }
@@ -52,5 +51,15 @@ public class UsuarioPersistenceAdapter implements
                         .orElseThrow(() -> new BusinessRuleException("Nenhum usuário com o username inserido foi encontrado."));
 
         return usuarioMapper.fromEntity(usuarioEntity);
+    }
+
+    @Override
+    public Usuario atualizarUsuario(Usuario usuario) {
+
+        UsuarioEntity usuarioEntity = usuarioMapper.fromDomainComIdPredefinido(usuario);
+
+        UsuarioEntity usuarioSalvo = usuarioRepository.save(usuarioEntity);
+
+        return usuarioMapper.fromEntity(usuarioSalvo);
     }
 }
